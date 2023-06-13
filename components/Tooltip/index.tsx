@@ -1,3 +1,5 @@
+"use client";
+
 import { Tooltip } from "antd";
 import { useSize } from "ahooks";
 
