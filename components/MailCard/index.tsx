@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import Tooltip from "@/components/Tooltip";
 import { Card, Button } from "antd";
 import Link from "next/link";
@@ -8,8 +9,15 @@ import {
   RetweetOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import { useHomeStore } from "@/store/home";
 
 function MailCard() {
+  const { fetchEmail } = useHomeStore();
+
+  useEffect(() => {
+    fetchEmail();
+  });
+
   return (
     <Card
       title={null}

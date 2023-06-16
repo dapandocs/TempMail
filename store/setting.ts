@@ -13,7 +13,7 @@ export const useSettingStore = create<State & Action>()(
   persist(
     (set) => ({
       isAutoFresh: false,
-      setState: (state) => set(state),
+      setState: (state: State) => set(state),
     }),
     {
       name: "setting",
