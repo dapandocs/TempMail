@@ -1,4 +1,4 @@
-import GlobalSetting from "./globalSetting";
+import GlobalSetting from "./GlobalSetting";
 import "./globals.css";
 
 export const metadata = {
