@@ -1,6 +1,6 @@
 "use client";
 
-import { Table, ConfigProvider } from "antd";
+import { Table } from "antd";
 import type { TableColumnProps } from "antd";
 
 const data = [
@@ -42,32 +42,19 @@ function MailReceiveCard() {
     },
   ];
   return (
-    <div className="m-auto mt-6 pl-2 pr-2 lg:w-[1000px]">
-      <ConfigProvider
-        theme={{
-          components: {
-            Table: {
-              colorBgContainer: "transparent",
-              colorText: "#fff",
-              colorTextHeading: "#fff",
-              colorBorderSecondary: "rgb(244 245 249 / 0.2)",
-            },
-          },
+    <div className="m-auto mt-4 lg:w-[1000px]">
+      <Table
+        rowKey="id"
+        columns={columns}
+        dataSource={data}
+        pagination={false}
+        bordered
+        locale={{
+          emptyText: (
+            <div className="text-white">Waiting for incoming emails</div>
+          ),
         }}
-      >
-        <Table
-          rowKey="id"
-          columns={columns}
-          dataSource={data}
-          pagination={false}
-          bordered
-          locale={{
-            emptyText: (
-              <div className="text-white">Waiting for incoming emails</div>
-            ),
-          }}
-        />
-      </ConfigProvider>
+      />
     </div>
   );
 }
