@@ -1,22 +1,14 @@
 "use client";
 
 import { Table } from "antd";
+import { useHomeStore } from "@/store/home";
 import type { TableColumnProps } from "antd";
-
-const data = [
-  {
-    id: 1,
-    from: "Google",
-    subject: "Google Verification Code",
-  },
-  {
-    id: 2,
-    from: "Facebook",
-    subject: "Facebook Verification Code",
-  },
-];
+import NoSSR from "@/components/NoSSR";
 
 function MailReceiveCard() {
+  const { mailingList } = useHomeStore();
+  console.log("mailingList", mailingList);
+
   const columns: TableColumnProps<any>[] = [
     {
       dataIndex: "from",
@@ -42,20 +34,22 @@ function MailReceiveCard() {
     },
   ];
   return (
-    <div className="m-auto mt-4 lg:w-[1000px]">
-      <Table
-        rowKey="id"
-        columns={columns}
-        dataSource={data}
-        pagination={false}
-        bordered
-        locale={{
-          emptyText: (
-            <div className="text-white">Waiting for incoming emails</div>
-          ),
-        }}
-      />
-    </div>
+    <NoSSR>
+      <div className="m-auto mt-4 lg:w-[1000px]">
+        <Table
+          rowKey="id"
+          columns={columns}
+          dataSource={mailingList}
+          pagination={false}
+          bordered
+          locale={{
+            emptyText: (
+              <div className="text-white">Waiting for incoming emails</div>
+            ),
+          }}
+        />
+      </div>
+    </NoSSR>
   );
 }
 

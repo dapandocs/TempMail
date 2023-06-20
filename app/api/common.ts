@@ -1,3 +1,26 @@
+import { TempEmailHost, TempEmailType } from "@/utils/constant";
+
+export const getRequestHeader = (emailType: TempEmailType) => {
+  const x_rapidapi_key = process.env["X-RAPIDAPI-KEY"];
+  if (!x_rapidapi_key) {
+    return "Missing X-RAPIDAPI-KEY";
+  }
+  switch (emailType) {
+    case "temp-email44":
+      return {
+        "x-rapidapi-key": x_rapidapi_key,
+        "x-rapidapi-host": TempEmailHost.TempEmail44,
+      };
+    case "temp-email":
+      return {
+        "x-rapidapi-key": x_rapidapi_key,
+        "x-rapidapi-host": TempEmailHost.TempEmail,
+      };
+    default:
+      return "Invalid email type";
+  }
+};
+
 export async function request(url: string, options: Record<string, any>) {
   const { headers = {}, ...restOpt } = options;
 

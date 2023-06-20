@@ -1,5 +1,8 @@
 import GlobalSetting from "./GlobalSetting";
+import { Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Temp Mail - 临时邮箱",
@@ -14,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={inter.className}>
         <GlobalSetting>{children}</GlobalSetting>
       </body>
     </html>

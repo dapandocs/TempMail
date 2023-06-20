@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useEffect } from "react";
 import Tooltip from "@/components/Tooltip";
@@ -12,11 +13,15 @@ import {
 import { useHomeStore } from "@/store/home";
 
 function MailCard() {
-  const { fetchEmail } = useHomeStore();
+  const { currentEmail, createEmail, getEmailList } = useHomeStore();
 
   useEffect(() => {
-    fetchEmail();
-  });
+    console.log("currentEmail", currentEmail);
+    getEmailList();
+    if (!currentEmail) {
+      createEmail();
+    }
+  }, []);
 
   return (
     <Card
@@ -29,20 +34,13 @@ function MailCard() {
       </div>
       <div className="flex justify-center mt-6">
         <Tooltip title="Your temporary email address" placement="left">
-          <div className="w-60 h-10 lg:h-12 text-lg bg-slate-600 rounded-3xl flex items-center pl-4">
-            rijepo4946@peogi.com
+          <div className="min-w-min h-10 lg:h-12 text-lg bg-slate-600 rounded-3xl flex items-center pl-4 pr-4">
+            {currentEmail}
           </div>
-        </Tooltip>
-        <Tooltip title="Copy to clipboard" placement="right">
-          <Button
-            icon={<CopyOutlined />}
-            shape="circle"
-            className="!w-10 h-10 lg:h-12 lg:!w-12 ml-4"
-          />
         </Tooltip>
       </div>
       <div className="pb-8 mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Tooltip title="Copy" placement="left">
+        <Tooltip title="Copy to clipboard" placement="left">
           <Button
             icon={<CopyOutlined />}
             className="h-10 lg:h-12 text-lg shadow-md"
@@ -50,7 +48,7 @@ function MailCard() {
             Copy
           </Button>
         </Tooltip>
-        <Tooltip title="Change" placement="bottom">
+        <Tooltip title="Generate a new email" placement="bottom">
           <Button
             icon={<EditOutlined />}
             className="h-10 lg:h-12 text-lg shadow-md"
@@ -58,7 +56,7 @@ function MailCard() {
             Change
           </Button>
         </Tooltip>
-        <Tooltip title="Refresh" placement="bottom">
+        <Tooltip title="Refresh mailing list" placement="bottom">
           <Button
             icon={<RetweetOutlined />}
             className="h-10 lg:h-12 text-lg shadow-md"

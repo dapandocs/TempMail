@@ -23,7 +23,6 @@ export async function POST() {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.nextUrl);
   const email = searchParams.get("email");
-
   if (!email) {
     return NextResponse.json(Error({ error: "Missing email parameter" }));
   }

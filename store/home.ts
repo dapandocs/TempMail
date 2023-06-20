@@ -1,31 +1,51 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { TempEmailType } from "@/utils/constant";
+import { message } from "antd";
 
 type State = {
-  curEmail: string | null;
+  currentEmail: string | null;
+  emailType: TempEmailType;
+  mailingList: any[];
 };
 
 type Action = {
-  fetchEmail: () => void;
-  setState: (state: State) => void;
+  createEmail: () => void;
+  getEmailList: () => void;
 };
 
 export const useHomeStore = create<State & Action>()(
   persist(
-    (set) => ({
-      curEmail: null,
-      fetchEmail: async () => {
-        const res = await fetch("/api/temp-email?email=111", {
+    (set, get) => ({
+      currentEmail: null,
+      emailType: TempEmailType.TempEmail_ALTMAILS,
+      mailingList: [],
+      createEmail: async () => {
+        const emailType = get().emailType;
+        const response = await fetch(`/api/${emailType}`, {
+          method: "POST",
+        }).then((res) => res.json());
+        if (response.code === 0) {
+          set({ currentEmail: response.result });
+        }else{
+          message.error(response.error);
+        }
+      },
+      getEmailList: async () => {
+        const { emailType, currentEmail } = get();
+        const res = await fetch(`/api/${emailType}?email=${currentEmail}`, {
           method: "GET",
         }).then((res) => res.json());
-        console.log("res", res);
-        // const data = await res.json();
-        // set({ curEmail: data.email });
+        if (res.code === 0) {
+          set({ mailingList: res.result });
+        }else{
+          message.error(res.error);
+        }
       },
-      setState: (state: State) => set(state),
     }),
     {
       name: "home",
+      version: 1,
     }
   )
 );
