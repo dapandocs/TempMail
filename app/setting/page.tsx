@@ -8,7 +8,7 @@ function Setting() {
   return (
     <Card
       title="Setting"
-      className="lg:w-[660px] lg:m-auto shadow-md"
+      className="lg:w-[770px] lg:m-auto shadow-md"
       bodyStyle={{ padding: "12px 24px" }}
       extra={
         <Link href="/">

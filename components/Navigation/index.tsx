@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function Navigation() {
   return (
-    <div className="h-16 max-w-[1440px] m-auto flex items-center p-4 lg:p-0">
+    <div className="h-16 max-w-[1440px] flex items-center p-4 lg:p-0 mx-auto">
       <div className="w-1/2 flex items-center">
         <Image
           className="rotate-12 hover:rotate-45 transition-all"

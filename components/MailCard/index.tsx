@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+
 import { useEffect } from "react";
 import Tooltip from "@/components/Tooltip";
-import { Card, Button } from "antd";
+import { Card, Button, message } from "antd";
 import Link from "next/link";
 import {
   CopyOutlined,
@@ -13,11 +14,10 @@ import {
 import { useHomeStore } from "@/store/home";
 
 function MailCard() {
-  const { currentEmail, createEmail, getEmailList } = useHomeStore();
+  const { currentEmail, createEmailLoading, createEmail, getEmailList } =
+    useHomeStore();
 
   useEffect(() => {
-    console.log("currentEmail", currentEmail);
-    getEmailList();
     if (!currentEmail) {
       createEmail();
     }
@@ -44,6 +44,27 @@ function MailCard() {
           <Button
             icon={<CopyOutlined />}
             className="h-10 lg:h-12 text-lg shadow-md"
+            onClick={async () => {
+              if (currentEmail) {
+                try {
+                  await navigator.clipboard.writeText(currentEmail);
+                  message.success("Copy Success");
+                } catch (error) {
+                  const textArea = document.createElement("textarea");
+                  textArea.value = currentEmail;
+                  document.body.appendChild(textArea);
+                  textArea.focus();
+                  textArea.select();
+                  try {
+                    document.execCommand("copy");
+                    message.success("Copy Success");
+                  } catch (error) {
+                    message.error("Copy Failed");
+                  }
+                  document.body.removeChild(textArea);
+                }
+              }
+            }}
           >
             Copy
           </Button>
@@ -52,6 +73,10 @@ function MailCard() {
           <Button
             icon={<EditOutlined />}
             className="h-10 lg:h-12 text-lg shadow-md"
+            onClick={() => {
+              createEmail();
+            }}
+            loading={createEmailLoading}
           >
             Change
           </Button>
@@ -60,6 +85,9 @@ function MailCard() {
           <Button
             icon={<RetweetOutlined />}
             className="h-10 lg:h-12 text-lg shadow-md"
+            onClick={() => {
+              getEmailList();
+            }}
           >
             Refresh
           </Button>

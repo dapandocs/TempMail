@@ -72,3 +72,21 @@ export async function GET(req: NextRequest) {
   }
   return NextResponse.json(Error({ error: response }));
 }
+
+// view
+export async function PUT(req: NextRequest) {
+  const { searchParams } = new URL(req.nextUrl);
+  const mailId = searchParams.get("mailId");
+  console.log("mailId: ", mailId);
+  const amsResult = await fetch(
+    `https://tempmail.altmails.com/view/${mailId}#content`
+  );
+  const htmlText = await amsResult.text();
+  var pattern = /decodeURIComponent\(atob\("([A-Za-z0-9+/=]+)"\)\)/;
+  var match = htmlText.match(pattern);
+  if (Array.isArray(match) && match.length) {
+    const content = decodeURIComponent(atob(match[1]));
+    return NextResponse.json(Success({ data: content }));
+  }
+  return NextResponse.json(Error({ error: "No content" }));
+}

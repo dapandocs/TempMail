@@ -9,7 +9,7 @@ interface ErrorOptions {
 }
 
 export function Success(options?: SuccessOptions) {
-  const { msg = '请求成功', data = null } = options || {};
+  const { msg = "请求成功", data = null } = options || {};
   return {
     code: 0,
     msg,
@@ -18,7 +18,7 @@ export function Success(options?: SuccessOptions) {
 }
 
 export function Error(options?: ErrorOptions) {
-  const { msg = '请求失败', error = null } = options || {};
+  const { msg = "请求失败", error = null } = options || {};
   return {
     code: -1,
     msg,

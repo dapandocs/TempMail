@@ -6,10 +6,21 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
-body {
-  position: fixed;
-  width: 100%;
-  
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
+
+::-webkit-scrollbar-thumb {
+  background: rgba(195, 198,209,0.3 );
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a9acaf;
+  border-radius: 6px;
+}
+
